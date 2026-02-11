@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Question ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff0f3;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #main-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 10;
+            max-width: 90%;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button {
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #590d22;
+            color: white;
+            position: absolute; /* Needed for the movement */
+        }
+
+        /* Floating Balloon Styles */
+        .balloon {
+            position: absolute;
+            font-size: 30px;
+            bottom: -50px;
+            animation: float 6s ease-in infinite;
+            z-index: 1;
+            user-select: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(20deg); opacity: 0; }
+        }
+
+        /* Success Message Styling */
+        #success-msg {
+            display: none;
+            color: #ff4d6d;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main-card">
+        <div id="question-content">
+            <h1>Will you be my Valentine?</h1>
+            <div class="button-group">
+                <button id="yesBtn" onclick="celebrate()">Yes</button>
+                <button id="noBtn" onmouseover="moveButton()">No</button>
+            </div>
+        </div>
+
+        <div id="success-msg">
+            <h1>I knew you would say yes! ❤️</h1>
+            <p style="font-size: 1.2rem; color: #590d22;">
+                Meet me at <strong>[Hotel Name]</strong> <br> 
+                Today at <strong>[Time]</strong>
+            </p>
+            <div style="font-size: 3rem;">❤️</div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating heart balloons
+        function createBalloon() {
+            const balloon = document.createElement('div');
+            balloon.classList.add('balloon');
+            balloon.innerHTML = '🎈❤️';
+            balloon.style.left = Math.random() * 100 + "vw";
+            balloon.style.animationDuration = (Math.random() * 3 + 4) + "s";
+            document.body.appendChild(balloon);
+
+            setTimeout(() => { balloon.remove(); }, 6000);
+        }
+        setInterval(createBalloon, 500);
+
+        // Make the No button run away
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        // Handle Yes click
+        function celebrate() {
+            document.getElementById('question-content').style.display = 'none';
+            document.getElementById('success-msg').style.display = 'block';
+            
+            // Extra heart burst!
+            for(let i=0; i<20; i++) {
+                setTimeout(createBalloon, i * 50);
+            }
+        }
+    </script>
+</body>
+</html>
