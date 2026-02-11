@@ -35,7 +35,6 @@
 
         .button-group {
             display: flex;
-            justify-content: center;
             gap: 20px;
         }
 
@@ -79,7 +78,48 @@
         #success-msg {
             display: none;
             color: #ff4d6d;
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #fff0f3;
+            z-index: 20;
         }
+
+        #success-msg.active {
+            display: flex;
+        }
+
+        /* Circular Motion Container */
+        .circular-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin-top: 30px;
+        }
+
+        /* Image in circular motion */
+        .rotating-image {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            animation: circularMotion 8s linear infinite;
+        }
+
+        @keyframes circularMotion {
+            0% { transform: rotate(0deg) translateX(150px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+        }
+
+        .rotating-image:nth-child(1) { animation-delay: 0s; }
+        .rotating-image:nth-child(2) { animation-delay: 2.7s; }
+        .rotating-image:nth-child(3) { animation-delay: 5.4s; }
     </style>
 </head>
 <body>
@@ -90,13 +130,20 @@
             <h1>Will you be my Valentine?</h1>
             <div class="button-group">
                 <button id="yesBtn" onclick="celebrate()">Yes</button>
-                <button id="noBtn" style="padding-left: 30px;" onmouseover="moveButton()">No</button>
+                <button id="noBtn" style="margin-left: 274px;" onmouseover="moveButton()">No</button>
             </div>
         </div>
 
         <div id="success-msg">
             <h1>I knew you would say yes! ❤️</h1>
-            <img style="font-size: 1.2rem; color: #590d22;" src="test.gif"
+            <img style="font-size: 1.2rem; color: #590d22;" src="test.gif">
+            
+            <!-- Circular Motion Images -->
+            <div class="circular-container">
+                <img class="rotating-image" src="testr2.gif" alt="image1">
+                <img class="rotating-image" src="test.gif" alt="image2">
+                <img class="rotating-image" src="testr2.gif" alt="image3">
+            </div>
         </div>
     </div>
 
@@ -127,7 +174,7 @@
         // Handle Yes click
         function celebrate() {
             document.getElementById('question-content').style.display = 'none';
-            document.getElementById('success-msg').style.display = 'block';
+            document.getElementById('success-msg').classList.add('active');
             
             // Extra heart burst!
             for(let i=0; i<20; i++) {
